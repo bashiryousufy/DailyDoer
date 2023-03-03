@@ -4,7 +4,7 @@ const db = new PrismaClient();
 
 function generateAccessToken(user: any) {
   return jwt.sign({ userId: user.id }, process.env.JWT_ACCESS_SECRET, {
-    expiresIn: '15m',
+    expiresIn: '24h',
   });
 }
 

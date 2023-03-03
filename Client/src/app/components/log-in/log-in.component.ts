@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ApiService } from "../../api.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-log-in',
@@ -6,5 +9,32 @@ import { Component } from '@angular/core';
   styleUrls: ['./log-in.component.css']
 })
 export class LogInComponent {
+  public submitted = false;
+  public loginForm!: FormGroup;
 
+  constructor(
+    private formBuilder: FormBuilder,
+    private api: ApiService,
+    private router: Router
+  ) { }
+
+  ngOnInit(): void {
+    this.loginForm = this.formBuilder.group({
+      email: ["", [Validators.email, Validators.required]],
+      password: ["",[Validators.required]]
+    });
+  }
+
+  get formControl() {
+    return this.loginForm.controls;
+  }
+
+  onLogin() {
+    if(this.loginForm.valid){
+      this.api.login(this.loginForm.value).subscribe((res) => {
+        localStorage.setItem("token", res.accessToken);
+        this.router.navigate(["todos"]);
+      });
+    }
+  }
 }
