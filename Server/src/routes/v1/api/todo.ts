@@ -1,9 +1,9 @@
 import express from 'express';
 const app = express.Router();
 import Todo from '../../../datasource/todo';
-import { Prisma } from '@prisma/client';
+import isAuthenticated from '../../../middleware/validate';
 
-app.get('/', async (req, res) => {
+app.get('/', isAuthenticated, async (req, res) => {
 
     const data = await Todo.get();
 
@@ -11,34 +11,30 @@ app.get('/', async (req, res) => {
 
 });
 
-app.post('/', async (req, res) => {
+app.post('/', isAuthenticated, async (req, res) => {
 
-    const { title, description, isDone, userId} = req.body;
+    const { title, description, isDone, userId } = req.body;
 
     const data = await Todo.create({
         title,
         description,
         userId,
         isDone,
-        createdAt: new Date(),
-        updatedAt: new Date()
     });
 
-    res.send({
-        data
-    });
+    res.send(data);
 
 });
 
-app.put('/:id', async (req, res) => {
+app.put('/:id', isAuthenticated, async (req, res) => {
 
     const { id } = req.params;
 
     const body = req.body;
 
-    const data = await Todo.update(Number(id),body); 
+    const data = await Todo.update(Number(id), body);
 
-    if(data.count > 0){
+    if (data!.count > 0) {
 
         res.send({
             message: "Todo item updated successfully!"
@@ -51,16 +47,16 @@ app.put('/:id', async (req, res) => {
         });
 
     }
-   
+
 });
 
-app.delete('/:id', async (req, res) => {
+app.delete('/:id', isAuthenticated, async (req, res) => {
 
     const { id } = req.params;
 
-    const data = await Todo.deletes(Number(id) as Prisma.IntFilter);
+    const data = await Todo.deletes(Number(id));
 
-    if(data.count > 0){
+    if (data!.count > 0) {
 
         res.send({
             message: "Todo item deleted successfully!"

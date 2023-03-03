@@ -11,22 +11,46 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String
-  role      Int      @default(2)
-  createdAt DateTime @db.Timestamp(3)
-  updatedAt DateTime @updatedAt
-  Todo      Todo[]
+  id           String         @id @unique @default(uuid())
+  email        String         @unique
+  name         String         @db.VarChar(255)
+  password     String
+  role         RoleEnumType?  @default(user)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  Todo         Todo[]
+  RefreshToken RefreshToken[]
+
+  @@index([email])
+  @@map(name: "users")
+}
+
+model RefreshToken {
+  id          String   @id @unique @default(uuid())
+  hashedToken String
+  userId      String
+  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  revoked     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map(name: "refreshToken")
 }
 
 model Todo {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @unique @default(uuid())
   title       String
   description String?
   isDone      Boolean?
-  userId      Int
+  userId      String
   User        User     @relation(fields: [userId], references: [id])
   createdAt   DateTime @db.Timestamp(3)
   updatedAt   DateTime @updatedAt
+
+  @@map(name: "todos")
+}
+
+enum RoleEnumType {
+  user
+  admin
 }

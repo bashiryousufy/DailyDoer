@@ -1,6 +1,7 @@
 import { Prisma, PrismaClient, Todo } from '@prisma/client';
 const prisma = new PrismaClient();
 
+type TTodo = Omit<Todo, "id" | "createdAt" | "updatedAt" | "role">;
 
 const get = async () => {
     try {
@@ -8,19 +9,25 @@ const get = async () => {
 
         return todos;
     } catch (error) {
-        throw new Error("Can not fetch todos" + error);
+        console.log("Can not fetch todos" + error);
     }
 }
 
-const create = async (todo: Omit<Todo, "id">) => {
+const create = async (todo: TTodo) => {
     try {
         const todos = await prisma.todo.create({
-            data: todo
+            data: {
+                title: todo.title,
+                description: todo.description,
+                isDone: todo.isDone,
+                userId: todo.userId,
+                createdAt: new Date()
+            }
         })
 
         return todos;
     } catch (error) {
-        throw new Error("Can not create todos" + error);
+        console.log("Can not create todos" + error);
     }
 }
 
@@ -35,11 +42,11 @@ const update = async (todoId: Number, todo: Todo) => {
 
         return todos;
     } catch (error) {
-        throw new Error("Can not create todos");
+        console.log("Can not create todos");
     }
 }
 
-const deletes = async (todoId: Prisma.IntFilter) => {
+const deletes = async (todoId: any) => {
     try {
         const todos = await prisma.todo.deleteMany({
             where: {
@@ -49,7 +56,7 @@ const deletes = async (todoId: Prisma.IntFilter) => {
 
         return todos;
     } catch (error) {
-        throw new Error("Can not create todos" + error);
+        console.log("Can not create todos" + error);
     }
 }
 
