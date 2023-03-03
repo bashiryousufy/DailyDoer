@@ -1,7 +1,7 @@
 import { Component, ViewChild} from '@angular/core';
 import { ApiService } from '../../api.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../common/dialog/dialog.component';
 
 @Component({
   selector: 'app-todo',
@@ -9,17 +9,19 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./todo.component.css']
 })
 export class TodoComponent {
-  displayedColumns: string[] = ['id', 'title', 'description', 'isDone', 'userId'];
-  todos!: MatTableDataSource<Todo>;
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  constructor(private api: ApiService){ }
+  public todos: Todo[] = [];
+  private newTodo?: Todo;
+  constructor(private api: ApiService, public dialog: MatDialog){ }
 
   ngOnInit() {
     this.api.getTodos().subscribe((data: Todo[]) => {
-      this.todos = new MatTableDataSource<Todo>(data);
-      this.todos.paginator = this.paginator;
+      this.todos = data;
+    });
+  }
+
+  openAddTodoDialog(): void {
+    this.dialog.open(DialogComponent, {
+      data: {type: "todo"},
     });
   }
 
@@ -31,4 +33,5 @@ export interface Todo {
   description: String,
   isDone: boolean,
   userId?: String,
+  createdAt: String,
 }

@@ -10,13 +10,17 @@ import { RegisterComponent } from './components/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { UserComponent } from './components/user/user.component';
+import { DialogComponent } from './components/common/dialog/dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TodoComponent,
     LogInComponent,
-    RegisterComponent
+    RegisterComponent,
+    UserComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,

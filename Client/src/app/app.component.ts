@@ -32,6 +32,8 @@ export class AppComponent {
 
       localStorage.removeItem("token");
 
+      localStorage.removeItem("userId");
+
       this.router.navigate(["login"]);
 
     }

@@ -1,7 +1,21 @@
-.mat-elevation-z8 {
+.todoList {
     margin-top: 4rem;
+    position: fixed;
+    width: 100%;
 }
 
-table {
+.fab-container {
+    position: fixed;
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap-reverse;
+    flex-direction: row-reverse;
+}
+
+.fab-btn {
+    width:70px;
+    height:70px;
+    position: absolute;
+    margin: 15px;
 }

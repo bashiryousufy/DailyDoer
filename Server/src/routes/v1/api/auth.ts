@@ -76,6 +76,7 @@ app.post('/login', async (req: any, res: any, next: any) => {
         await addRefreshTokenToWhitelist({ jti, refreshToken, userId: existingUser.id });
 
         res.json({
+            userData: existingUser,
             accessToken,
             refreshToken
         });
