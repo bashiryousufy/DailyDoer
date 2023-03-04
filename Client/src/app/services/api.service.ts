@@ -41,14 +41,14 @@ export class ApiService {
     return this.http
       .post<any>(`${this.baseUrl}/todo`,data,{
         headers: this.getToken(),
-      });
+    });
   }
 
   updateTodo(data: any, todoId: String): Observable<any> {
     return this.http
       .put<any>(`${this.baseUrl}/todo/${todoId}`,data,{
         headers: this.getToken(),
-      });
+    });
   }
   
 }

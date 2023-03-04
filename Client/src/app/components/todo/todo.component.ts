@@ -2,6 +2,7 @@ import { Component, ViewChild} from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../common/dialog/dialog.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-todo',
@@ -11,16 +12,18 @@ import { DialogComponent } from '../common/dialog/dialog.component';
 export class TodoComponent {
   public todos: Todo[] = [];
 
-  constructor(private api: ApiService, public dialog: MatDialog){ }
+  constructor(private api: ApiService, public dialog: MatDialog, private spinner: NgxSpinnerService){ }
 
   ngOnInit() {
     this.getTodos();
   }
 
   getTodos() {
+    this.spinner.show();
     this.api.getTodos().subscribe((data: Todo[]) => {
       // sort the todo by not done on top
       this.todos = data.sort((a: any,b: any) => a.isDone - b.isDone );
+      this.spinner.hide();
     });
   }
 

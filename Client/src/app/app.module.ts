@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { UserComponent } from './components/user/user.component';
 import { DialogComponent } from './components/common/dialog/dialog.component';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { DialogComponent } from './components/common/dialog/dialog.component';
     FormsModule, 
     ReactiveFormsModule,
     HttpClientModule,
+    NgxSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent],

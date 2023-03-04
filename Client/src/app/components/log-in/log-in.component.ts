@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ApiService } from "../../services/api.service";
 import { Router } from "@angular/router";
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-log-in',
@@ -15,7 +16,8 @@ export class LogInComponent {
   constructor(
     private formBuilder: FormBuilder,
     private api: ApiService,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
@@ -31,10 +33,12 @@ export class LogInComponent {
 
   onLogin() {
     if(this.loginForm.valid){
+      this.spinner.show();
       this.api.login(this.loginForm.value).subscribe((res) => {
         localStorage.setItem("token", res.accessToken);
         localStorage.setItem("userId", res.userData.id);
         this.router.navigate(["todos"]);
+        this.spinner.hide();
       });
     }
   }
