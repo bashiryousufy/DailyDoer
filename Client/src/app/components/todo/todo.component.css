@@ -1,21 +1,19 @@
 .todoList {
-    margin-top: 4rem;
-    position: fixed;
+    margin-top: 1rem;
     width: 100%;
 }
 
 .fab-container {
-    position: fixed;
-    width: 100%;
-    height: 100%;
     display: flex;
+    position: static;
     flex-wrap: wrap-reverse;
     flex-direction: row-reverse;
+    margin-top: 140px;
 }
 
 .fab-btn {
     width:70px;
     height:70px;
     position: absolute;
-    margin: 15px;
+    margin-right: 15px;
 }

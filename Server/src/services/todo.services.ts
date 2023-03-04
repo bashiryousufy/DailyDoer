@@ -3,6 +3,7 @@ const prisma = new PrismaClient();
 
 type TTodo = Omit<Todo, "id" | "createdAt" | "updatedAt" | "role">;
 
+//get all todos
 const get = async () => {
     try {
         const todos = await prisma.todo.findMany();
@@ -13,6 +14,7 @@ const get = async () => {
     }
 }
 
+//insert a new todo into db
 const create = async (todo: TTodo) => {
     try {
         const todos = await prisma.todo.create({
@@ -31,11 +33,13 @@ const create = async (todo: TTodo) => {
     }
 }
 
+//update a todo 
 const update = async (todoId: Number, todo: Todo) => {
     try {
         const todos = await prisma.todo.updateMany({
             where: {
-                id: todo.id
+                id: todo.id,
+                userId: todo.userId
             },
             data: todo
         })
@@ -46,6 +50,7 @@ const update = async (todoId: Number, todo: Todo) => {
     }
 }
 
+//delete a specific todo by id
 const deletes = async (todoId: any) => {
     try {
         const todos = await prisma.todo.deleteMany({

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { environment } from "../environment/environment";
+import { environment } from "../../environment/environment";
 import { Observable } from 'rxjs';
+import { Todo } from '../components/todo/todo.component';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,20 @@ export class ApiService {
   getTodos(): Observable<any> {
     return this.http
       .get<any>(`${this.baseUrl}/todo`,{
+        headers: this.getToken(),
+      });
+  }
+
+  createTodo(data: Todo): Observable<any> {
+    return this.http
+      .post<any>(`${this.baseUrl}/todo`,data,{
+        headers: this.getToken(),
+      });
+  }
+
+  updateTodo(data: any, todoId: String): Observable<any> {
+    return this.http
+      .put<any>(`${this.baseUrl}/todo/${todoId}`,data,{
         headers: this.getToken(),
       });
   }

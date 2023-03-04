@@ -1,6 +1,6 @@
 import express from 'express';
 const app = express.Router();
-import Todo from '../../../datasource/todo';
+import Todo from '../../../services/todo.services';
 import isAuthenticated from '../../../middleware/validate';
 
 app.get('/', isAuthenticated, async (req, res) => {
@@ -31,6 +31,8 @@ app.put('/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
 
     const body = req.body;
+
+    console.log(body);
 
     const data = await Todo.update(Number(id), body);
 

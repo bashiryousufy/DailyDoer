@@ -11,7 +11,7 @@ import  {
     findRefreshTokenById,
     deleteRefreshToken,
     revokeTokens
-} from '../../../services/auth.servies';
+} from '../../../services/auth.services';
 import {
     findUserByEmail,
     createUserByEmailAndPassword,
