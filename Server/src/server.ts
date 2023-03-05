@@ -4,6 +4,7 @@ require('dotenv').config();
 const cors = require('cors');
 import Todo from './routes/v1/api/todo';
 import Auth from './routes/v1/api/auth';
+import Translate from './routes/v1/api/translate';
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 //routes
 app.use('/api/v1/todo', Todo);
 app.use('/api/v1/auth', Auth);
+app.use('/api/v1/translate', Translate);
 
 app.get('/', async (req, res) => {
 	res.send('Server running ');
