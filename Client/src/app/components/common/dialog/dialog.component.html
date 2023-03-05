@@ -1,7 +1,7 @@
 <h1 class="form-title">Todo Form</h1>
 
 <form [formGroup]="form" (ngSubmit)="action()" class="dialog-container">
-   
+
     <mat-form-field appearance="fill">
         <mat-label>Title</mat-label>
         <input matInput formControlName="title">
@@ -14,9 +14,9 @@
 
     <mat-form-field appearance="fill">
         <mat-label>Is Complete</mat-label>
-        <mat-select formControlName="isDone">
-          <mat-option value="1">Completed</mat-option>
-          <mat-option value="0">Incompleted</mat-option>
+        <mat-select formControlName="isDone" [selected]="0">
+            <mat-option value="1">Completed</mat-option>
+            <mat-option value="0">Incompleted</mat-option>
         </mat-select>
     </mat-form-field>
 

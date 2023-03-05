@@ -1,12 +1,28 @@
 <mat-toolbar color="primary" class="app-header">
+
   <h1 class="title">DailyDoer</h1>
+
   <span class="nav-tool-items" *ngIf="!isLogged" class="btn">
     <a mat-button routerLink="login" routerLinkActive="active">Log in</a>
-    <a  mat-button mat-raised-button routerLink="register" routerLinkActive="active">Register</a>
+    <a mat-button mat-raised-button routerLink="register" routerLinkActive="active">Register</a>
   </span>
-  <span class="nav-tool-items" *ngIf="isLogged" class="btn">
-    <a  mat-button mat-raised-button routerLinkActive="active" (click)="logout()">Logout</a>
+
+  <span class="nav-tool-items" *ngIf="isLogged" class="nav-menu">
+
+    <a mat-raised-button (click)="openAddTodoDialog()">Add Todo</a>
+
+    <a mat-raised-button (click)="translateTodo()" color="warn">Translate</a>
+
+    <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>account_circle</mat-icon></button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item disabled>Welcome</button>
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+
   </span>
+
 </mat-toolbar>
-<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+
 <router-outlet></router-outlet>
+
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>

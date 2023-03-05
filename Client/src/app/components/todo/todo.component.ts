@@ -1,7 +1,5 @@
-import { Component, ViewChild} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
-import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../common/dialog/dialog.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -9,48 +7,55 @@ import { NgxSpinnerService } from 'ngx-spinner';
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.css']
 })
-export class TodoComponent {
+
+export class TodoComponent implements OnInit {
   public todos: Todo[] = [];
 
-  constructor(private api: ApiService, public dialog: MatDialog, private spinner: NgxSpinnerService){ }
+  constructor(private api: ApiService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.getTodos();
   }
 
-  getTodos() {
+  getTodos(): void {
+
     this.spinner.show();
+
     this.api.getTodos().subscribe((data: Todo[]) => {
       // sort the todo by not done on top
-      this.todos = data.sort((a: any,b: any) => a.isDone - b.isDone );
+      this.todos = data.sort((a: any, b: any) => a.isDone - b.isDone);
+
       this.spinner.hide();
-    });
-  }
 
-  openAddTodoDialog(): void {
-    
-    //open todo dialog 
-    this.dialog.open(DialogComponent, {
-      data: {type: "todo"},
-    });
-
-    //refetch the data to show the latest todo
-    this.dialog.afterAllClosed.subscribe(result => {
-      this.getTodos();
     });
 
   }
 
   updateTodo(event: any): void {
 
-    let todo: Todo = event.options[0]._value;
+    let todo: Todo = event.target.value;
 
     //change todo status
-    todo = {...todo, isDone: !todo.isDone}
+    todo = { ...todo, isDone: !todo.isDone }
+
+    this.spinner.show();
 
     this.api.updateTodo(todo, todo.id!).subscribe(res => {
-      console.log(res)
       this.getTodos();
+    });
+
+  }
+
+  deleteTodo(event: any): void {
+
+    const todoId = event.target.value;
+
+    this.spinner.show();
+
+    this.api.deleteTodo(todoId).subscribe(res => {
+
+      this.getTodos();
+
     });
 
   }

@@ -32,23 +32,30 @@ export class ApiService {
 
   getTodos(): Observable<any> {
     return this.http
-      .get<any>(`${this.baseUrl}/todo`,{
+      .get<any>(`${this.baseUrl}/todo`, {
         headers: this.getToken(),
       });
   }
 
   createTodo(data: Todo): Observable<any> {
     return this.http
-      .post<any>(`${this.baseUrl}/todo`,data,{
+      .post<any>(`${this.baseUrl}/todo`, data, {
         headers: this.getToken(),
-    });
+      });
   }
 
   updateTodo(data: any, todoId: String): Observable<any> {
     return this.http
-      .put<any>(`${this.baseUrl}/todo/${todoId}`,data,{
+      .put<any>(`${this.baseUrl}/todo/${todoId}`, data, {
         headers: this.getToken(),
-    });
+      });
   }
-  
+
+  deleteTodo(todoId: String): Observable<any> {
+    return this.http
+      .delete<any>(`${this.baseUrl}/todo/${todoId}`, {
+        headers: this.getToken(),
+      });
+  }
+
 }

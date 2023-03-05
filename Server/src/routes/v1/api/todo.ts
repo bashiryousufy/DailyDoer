@@ -56,7 +56,7 @@ app.delete('/:id', isAuthenticated, async (req, res) => {
 
     const { id } = req.params;
 
-    const data = await Todo.deletes(Number(id));
+    const data = await Todo.deletes(id);
 
     if (data!.count > 0) {
 

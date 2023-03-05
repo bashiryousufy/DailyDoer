@@ -1,22 +1,32 @@
-<div class="fab-container">
-
-  <button mat-fab color="accent" class="fab-btn" (click)="openAddTodoDialog()">
-      <mat-icon>add</mat-icon>
-  </button>
-  
-</div>
-
 <div class="todoList">
-    
-  <mat-selection-list #todo (selectionChange)="updateTodo($event)">
-      <mat-list-option *ngFor="let todo of todos" [selected]="todo.isDone" [value]="todo">
-        <h3 matListItemTitle>{{todo.description}}</h3>
-        <p matListItemLine>
-          <span>{{todo.createdAt}}</span>
-        </p>
-      </mat-list-option>
-  </mat-selection-list>
+
+  <mat-list #todo>
+
+    <h1 matHeader>Todos</h1>
+
+    <mat-divider></mat-divider>
+
+    <mat-list-item *ngFor="let todo of todos">
+
+      <h3 matListItemTitle>{{todo.description}}</h3>
+
+      <p matListItemLine>{{todo.createdAt}}</p>
+
+      <span matListItemMeta class="action-container">
+
+        <mat-icon class="action-btn" (click)="deleteTodo($event)" [value]="todo.id">delete</mat-icon>
+
+        <div *ngIf="todo.isDone; then done else notDone"></div>
+        <ng-template #done><mat-icon class="action-btn" (click)="updateTodo($event)"
+            [value]="todo">done_all</mat-icon></ng-template>
+        <ng-template #notDone><mat-icon class="action-btn" (click)="updateTodo($event)"
+            [value]="todo">cached</mat-icon></ng-template>
+
+      </span>
+
+    </mat-list-item>
+
+
+  </mat-list>
 
 </div>
-
-

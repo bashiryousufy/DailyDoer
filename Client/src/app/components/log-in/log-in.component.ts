@@ -23,7 +23,7 @@ export class LogInComponent {
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: ["", [Validators.email, Validators.required]],
-      password: ["",[Validators.required]]
+      password: ["", [Validators.required]]
     });
   }
 
@@ -32,7 +32,7 @@ export class LogInComponent {
   }
 
   onLogin() {
-    if(this.loginForm.valid){
+    if (this.loginForm.valid) {
       this.spinner.show();
       this.api.login(this.loginForm.value).subscribe((res) => {
         localStorage.setItem("token", res.accessToken);

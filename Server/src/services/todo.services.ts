@@ -51,7 +51,7 @@ const update = async (todoId: Number, todo: Todo) => {
 }
 
 //delete a specific todo by id
-const deletes = async (todoId: any) => {
+const deletes = async (todoId: string) => {
     try {
         const todos = await prisma.todo.deleteMany({
             where: {

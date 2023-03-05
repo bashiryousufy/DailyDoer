@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ApiService } from '../../../services/api.service';
 import { Todo } from '../../todo/todo.component';
@@ -21,16 +21,16 @@ export class DialogComponent {
     private router: Router
   ) {
 
-    if(this.data.type === "todo"){
+    if (this.data.type === "todo") {
       this.form = this.formBuilder.group({
         title: ["", [Validators.nullValidator, Validators.required]],
         isDone: ["", [Validators.nullValidator, Validators.required]],
-        description: ["",[Validators.nullValidator, Validators.required]],
-        createdAt: ["",[Validators.nullValidator, Validators.required]]
+        description: ["", [Validators.nullValidator, Validators.required]],
+        createdAt: ["", [Validators.nullValidator, Validators.required]]
       });
     }
 
-   }
+  }
 
   get formControl() {
     return this.form.controls;
@@ -41,9 +41,8 @@ export class DialogComponent {
   }
 
   action() {
-    console.log(this.form.value);
-    if(this.form.valid && this.data.type === "todo"){
-      
+    if (this.form.valid && this.data.type === "todo") {
+
       const toDoformData: Todo = {
         title: this.form.value.title,
         description: this.form.value.description,
