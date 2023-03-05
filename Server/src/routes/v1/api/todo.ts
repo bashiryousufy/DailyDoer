@@ -5,7 +5,20 @@ import isAuthenticated from '../../../middleware/validate';
 
 app.get('/', isAuthenticated, async (req, res) => {
 
-    const data = await Todo.get();
+    const userId: string = res.locals.userId;
+
+    const data = await Todo.get(userId);
+
+    res.send(data);
+
+});
+
+app.get('/:id', isAuthenticated, async (req, res) => {
+
+    const userId: string = res.locals.userId;
+    const { id } = req.params;
+
+    const data = await Todo.getById(id, userId);
 
     res.send(data);
 
@@ -13,7 +26,9 @@ app.get('/', isAuthenticated, async (req, res) => {
 
 app.post('/', isAuthenticated, async (req, res) => {
 
-    const { title, description, isDone, userId } = req.body;
+    const { title, description, isDone } = req.body;
+
+    const userId: string = res.locals.userId;
 
     const data = await Todo.create({
         title,
@@ -29,12 +44,11 @@ app.post('/', isAuthenticated, async (req, res) => {
 app.put('/:id', isAuthenticated, async (req, res) => {
 
     const { id } = req.params;
+    const userId: string = res.locals.userId;
 
     const body = req.body;
 
-    console.log(body);
-
-    const data = await Todo.update(Number(id), body);
+    const data = await Todo.update(id, userId, body);
 
     if (data!.count > 0) {
 
@@ -56,7 +70,9 @@ app.delete('/:id', isAuthenticated, async (req, res) => {
 
     const { id } = req.params;
 
-    const data = await Todo.deletes(id);
+    const userId: string = res.locals.userId;
+
+    const data = await Todo.deletes(id, userId);
 
     if (data!.count > 0) {
 

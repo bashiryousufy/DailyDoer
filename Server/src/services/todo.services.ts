@@ -4,9 +4,29 @@ const prisma = new PrismaClient();
 type TTodo = Omit<Todo, "id" | "createdAt" | "updatedAt" | "role">;
 
 //get all todos
-const get = async () => {
+const get = async (userId: string) => {
     try {
-        const todos = await prisma.todo.findMany();
+        const todos = await prisma.todo.findMany({
+            where: {
+                userId: userId
+            }
+        });
+
+        return todos;
+    } catch (error) {
+        console.log("Can not fetch todos" + error);
+    }
+}
+
+//get single todo by id
+const getById = async (id: string, userId: string) => {
+    try {
+        const todos = await prisma.todo.findMany({
+            where: {
+                id,
+                userId
+            }
+        });
 
         return todos;
     } catch (error) {
@@ -34,12 +54,12 @@ const create = async (todo: TTodo) => {
 }
 
 //update a todo 
-const update = async (todoId: Number, todo: Todo) => {
+const update = async (todoId: string, userId: string, todo: Todo) => {
     try {
         const todos = await prisma.todo.updateMany({
             where: {
                 id: todo.id,
-                userId: todo.userId
+                userId: userId
             },
             data: todo
         })
@@ -51,11 +71,12 @@ const update = async (todoId: Number, todo: Todo) => {
 }
 
 //delete a specific todo by id
-const deletes = async (todoId: string) => {
+const deletes = async (todoId: string, userId: string) => {
     try {
         const todos = await prisma.todo.deleteMany({
             where: {
                 id: todoId,
+                userId
             }
         })
 
@@ -71,7 +92,8 @@ export default {
     get,
     create,
     update,
-    deletes
+    deletes,
+    getById
 }
 
 

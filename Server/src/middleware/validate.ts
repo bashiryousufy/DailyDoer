@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
+import { parseJwt } from '../utils/jwt';
 
-function isAuthenticated(req: any , res: any , next: any ) {
+function isAuthenticated(req: any, res: any, next: any) {
 
   const { authorization } = req.headers;
 
@@ -11,6 +12,10 @@ function isAuthenticated(req: any , res: any , next: any ) {
   try {
 
     const token = authorization.split(' ')[1];
+
+    const parsedToken = parseJwt(token);
+
+    res.locals.userId = parsedToken.userId;
 
     const payload = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
 
@@ -25,6 +30,5 @@ function isAuthenticated(req: any , res: any , next: any ) {
   return next();
 
 }
-  
-export  default isAuthenticated;
-  
+
+export default isAuthenticated;

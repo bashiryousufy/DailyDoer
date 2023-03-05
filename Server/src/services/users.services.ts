@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 import { PrismaClient, User } from '@prisma/client'
 const prisma = new PrismaClient();
 
-type TUser =  Omit<User, "id" | "createdAt" | "updatedAt" | "role">;
+type TUser = Omit<User, "id" | "createdAt" | "updatedAt">;
 
 function findUserByEmail(email: string) {
   return prisma.user.findUnique({

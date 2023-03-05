@@ -5,8 +5,8 @@ const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 
 import { generateTokens } from '../../../utils/jwt';
-import   hashToken  from '../../../utils/hashToken';
-import  {
+import hashToken from '../../../utils/hashToken';
+import {
     addRefreshTokenToWhitelist,
     findRefreshTokenById,
     deleteRefreshToken,
@@ -21,7 +21,8 @@ import {
 
 app.post('/register', async (req: any, res: any, next: any) => {
     try {
-        const { email, password , name, } = req.body;
+        const { email, password, name, role } = req.body;
+
         if (!email || !password) {
             res.status(400).send('You must provide an email and a password.');
         }
@@ -36,8 +37,9 @@ app.post('/register', async (req: any, res: any, next: any) => {
             email,
             name,
             password,
+            role
         });
-        
+
         const jti = uuidv4();
         const { accessToken, refreshToken } = generateTokens(user, jti);
         await addRefreshTokenToWhitelist({ jti, refreshToken, userId: user.id });
