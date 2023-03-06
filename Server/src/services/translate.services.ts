@@ -1,5 +1,6 @@
 const { Translate } = require('@google-cloud/translate').v2;
 
+// translate the text into target language
 const translate = async (text: string, target: string) => {
     try {
 

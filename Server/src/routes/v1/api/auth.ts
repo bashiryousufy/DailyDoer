@@ -137,4 +137,3 @@ app.post('/revokeRefreshTokens', async (req: any, res: any, next: any) => {
 
 
 export default app;
-
