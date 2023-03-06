@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String         @id @unique @default(uuid())
+  email        String         @unique
+  name         String         @db.VarChar(255)
+  password     String
+  role         RoleEnumType?  @default(user)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  Todo         Todo[]
+  RefreshToken RefreshToken[]
+
+  @@index([email])
+  @@map(name: "users")
+}
+
+model RefreshToken {
+  id          String   @id @unique @default(uuid())
+  hashedToken String
+  userId      String
+  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  revoked     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map(name: "refreshToken")
+}
+
+model Todo {
+  id          String   @id @unique @default(uuid())
+  title       String
+  description String?
+  isDone      Boolean?
+  userId      String
+  User        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @db.Timestamp(3)
+  updatedAt   DateTime @updatedAt
+
+  @@map(name: "todos")
+}
+
+enum RoleEnumType {
+  user
+  admin
+}
