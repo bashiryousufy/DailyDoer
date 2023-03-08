@@ -2,9 +2,9 @@ import express from 'express';
 const morgan = require('morgan');
 require('dotenv').config();
 const cors = require('cors');
-import Todo from './routes/v1/api/todo';
-import Auth from './routes/v1/api/auth';
-import Translate from './routes/v1/api/translate';
+import Todo from './routes/v1/api/todo.route';
+import Auth from './routes/v1/api/auth.route';
+import Translate from './routes/v1/api/translate.route';
 
 const app = express();
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-todo',
@@ -10,8 +11,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 
 export class TodoComponent implements OnInit {
   public todos: Todo[] = [];
+  private todosTitles: String[] = [];
+  public form!: FormGroup;
 
-  constructor(private api: ApiService, private spinner: NgxSpinnerService) { }
+
+  constructor(private api: ApiService, private spinner: NgxSpinnerService, private formBuilder: FormBuilder,) { }
 
   ngOnInit() {
     this.getTodos();
@@ -24,6 +28,11 @@ export class TodoComponent implements OnInit {
     this.api.getTodos().subscribe((data: Todo[]) => {
       // sort the todo by not done on top
       this.todos = data.sort((a: any, b: any) => a.isDone - b.isDone);
+
+      //combine all the titles along with todo id 
+      this.todos.map((todo) => {
+        this.todosTitles.push(`${todo.id}_${todo.title}`);
+      });
 
       this.spinner.hide();
 
@@ -42,6 +51,8 @@ export class TodoComponent implements OnInit {
 
     this.api.updateTodo(todo, todo.id!).subscribe(res => {
       this.getTodos();
+
+
     });
 
   }
@@ -57,6 +68,45 @@ export class TodoComponent implements OnInit {
       this.getTodos();
 
     });
+
+  }
+
+  translateTodo(event: any): void {
+
+    if (this.todos.length !== 0 && event.value !== 'None') {
+
+      const data = { data: this.todosTitles, target: event.value };
+
+      this.spinner.show();
+
+      this.api.translateTodo(data).subscribe(res => {
+
+        let translatedTodos: Todo[] = [];
+
+        for (const todo of this.todos) {
+
+          for (const resTodo of res.translatedTitle) {
+
+            //match the todoid 
+            if (todo.id === resTodo.split("_")[0]) {
+
+              translatedTodos.push(
+                { ...todo, title: resTodo.split("_")[1] }
+              );
+
+            }
+
+          }
+
+        }
+
+        this.todos = translatedTodos;
+
+        this.spinner.hide();
+
+      });
+
+    }
 
   }
 

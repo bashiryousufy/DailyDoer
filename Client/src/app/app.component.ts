@@ -55,8 +55,6 @@ export class AppComponent implements OnInit {
 
   }
 
-  translateTodo(): void {
 
-  }
 
 }

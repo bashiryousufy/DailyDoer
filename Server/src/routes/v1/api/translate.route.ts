@@ -2,15 +2,16 @@ import express from 'express';
 import isAuthenticated from '../../../middleware/validate';
 const app = express.Router();
 import { translate } from '../../../services/translate.services';
+import Todo from '../../../services/todo.services';
 
 
 app.post('/', isAuthenticated, async (req, res) => {
 
-    const { text, target } = req.body;
+    const { data, target } = req.body;
 
-    const data = await translate(text, target);
+    const translatedTitle = await translate(data, target);
 
-    res.send(data);
+    res.json({ translatedTitle });
 
 });
 

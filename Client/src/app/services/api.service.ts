@@ -58,4 +58,11 @@ export class ApiService {
       });
   }
 
+  translateTodo(data: any): Observable<any> {
+    return this.http
+      .post<any>(`${this.baseUrl}/translate`, data, {
+        headers: this.getToken(),
+      });
+  }
+
 }
