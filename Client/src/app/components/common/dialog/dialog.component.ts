@@ -10,7 +10,7 @@ import { Router } from "@angular/router";
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.css']
 })
-export class DialogComponent {
+export class DialogComponent implements OnInit {
   public form!: FormGroup;
 
   constructor(
@@ -19,8 +19,9 @@ export class DialogComponent {
     private formBuilder: FormBuilder,
     private api: ApiService,
     private router: Router
-  ) {
+  ) { }
 
+  ngOnInit() {
     if (this.data.type === "todo") {
       this.form = this.formBuilder.group({
         title: ["", [Validators.nullValidator, Validators.required]],
@@ -29,8 +30,8 @@ export class DialogComponent {
         createdAt: ["", [Validators.nullValidator, Validators.required]]
       });
     }
-
   }
+
 
   get formControl() {
     return this.form.controls;
@@ -52,8 +53,7 @@ export class DialogComponent {
       }
 
       this.api.createTodo(toDoformData).subscribe((res) => {
-        this.router.navigate(["todos"]);
-        this.dialogRef.close();
+        this.dialogRef.close(true);
       });
 
     }

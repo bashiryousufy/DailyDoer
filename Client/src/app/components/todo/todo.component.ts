@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-todo',
@@ -12,10 +11,9 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 export class TodoComponent implements OnInit {
   public todos: Todo[] = [];
   private todosTitles: String[] = [];
-  public form!: FormGroup;
 
 
-  constructor(private api: ApiService, private spinner: NgxSpinnerService, private formBuilder: FormBuilder,) { }
+  constructor(private api: ApiService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.getTodos();

@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from './components/common/dialog/dialog.component';
 import { TodoComponent } from './components/todo/todo.component';
@@ -7,15 +7,14 @@ import { TodoComponent } from './components/todo/todo.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+
 })
 export class AppComponent implements OnInit {
   title = 'DailyDoer';
   public isLogged: boolean = false;
 
-  @ViewChild(TodoComponent, { static: true }) todoComponent: TodoComponent | undefined;
-
-  constructor(private router: Router, public dialog: MatDialog) { }
+  constructor(private router: Router, public dialog: MatDialog, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
 
@@ -28,8 +27,6 @@ export class AppComponent implements OnInit {
     }
 
   }
-
-
 
   logout() {
 
@@ -48,13 +45,18 @@ export class AppComponent implements OnInit {
   }
 
   openAddTodoDialog(): void {
+
     //open todo dialog 
-    this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(DialogComponent, {
       data: { type: "todo" },
-    });
+    })
+      .afterClosed()
+      .subscribe((shouldReload: boolean) => {
+        dialogRef.unsubscribe();
+        //reload the page to get the latest todos 
+        if (shouldReload) window.location.reload();
+      });
 
   }
-
-
 
 }
