@@ -1,8 +1,5 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from "@angular/router";
-import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from './components/common/dialog/dialog.component';
-import { TodoComponent } from './components/todo/todo.component';
+import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -14,7 +11,7 @@ export class AppComponent implements OnInit {
   title = 'DailyDoer';
   public isLogged: boolean = false;
 
-  constructor(private router: Router, public dialog: MatDialog, private activatedRoute: ActivatedRoute) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
 
@@ -44,19 +41,6 @@ export class AppComponent implements OnInit {
 
   }
 
-  openAddTodoDialog(): void {
 
-    //open todo dialog 
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: { type: "todo" },
-    })
-      .afterClosed()
-      .subscribe((shouldReload: boolean) => {
-        dialogRef.unsubscribe();
-        //reload the page to get the latest todos 
-        if (shouldReload) window.location.reload();
-      });
-
-  }
 
 }

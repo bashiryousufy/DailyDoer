@@ -3,19 +3,26 @@
   <div class="row">
 
     <h1 matHeader>Todos</h1>
-    <mat-form-field appearance="fill">
-      <mat-label>Select a language</mat-label>
-      <mat-select (selectionChange)="translateTodo($event)">
-        <mat-option value="None">None</mat-option>
-        <mat-option value="fa">Persian</mat-option>
-        <mat-option value="ru">Russian</mat-option>
-        <mat-option value="es">Spanish</mat-option>
-        <mat-option value="ar">Arabic</mat-option>
-        <mat-option value="zh">Chinese</mat-option>
-        <mat-option value="hi">Hindi</mat-option>
-        <mat-option value="fr">French</mat-option>
-      </mat-select>
-    </mat-form-field>
+
+    <div class="translateBtnContainer">
+      <button mat-raised-button color="accent" (click)="openAddTodoDialog()" class="addBtn">
+        <mat-icon fontIcon="add"></mat-icon> Add Todo
+      </button>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Select a language</mat-label>
+        <mat-select (selectionChange)="translateTodo($event)">
+          <mat-option value="None">None</mat-option>
+          <mat-option value="fa">Persian</mat-option>
+          <mat-option value="ru">Russian</mat-option>
+          <mat-option value="es">Spanish</mat-option>
+          <mat-option value="ar">Arabic</mat-option>
+          <mat-option value="zh">Chinese</mat-option>
+          <mat-option value="hi">Hindi</mat-option>
+          <mat-option value="fr">French</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
   </div>
 

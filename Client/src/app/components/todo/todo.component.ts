@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DialogComponent } from '../common/dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-todo',
@@ -13,10 +15,25 @@ export class TodoComponent implements OnInit {
   private todosTitles: String[] = [];
 
 
-  constructor(private api: ApiService, private spinner: NgxSpinnerService) { }
+  constructor(private api: ApiService, private spinner: NgxSpinnerService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getTodos();
+  }
+
+  openAddTodoDialog(): void {
+
+    //open todo dialog 
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: { type: "todo" },
+    })
+      .afterClosed()
+      .subscribe((shouldReload: boolean) => {
+        dialogRef.unsubscribe();
+        //reload the page to get the latest todos 
+        if (shouldReload) this.getTodos();
+      });
+
   }
 
   getTodos(): void {
