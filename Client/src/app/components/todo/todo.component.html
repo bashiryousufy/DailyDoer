@@ -30,9 +30,9 @@
 
   <mat-list #todo>
 
-    <mat-list-item *ngFor="let todo of todos">
+    <mat-list-item *ngFor="let todo of todos" [class.stroke]="todo.isDone">
 
-      <h3 matListItemTitle>{{todo.title}}</h3>
+      <h2 matListItemTitle (click)="viewTodo(todo)">{{todo.title}}</h2>
 
       <p matListItemLine>{{todo.createdAt}}</p>
 
@@ -42,10 +42,10 @@
 
         <div *ngIf="todo.isDone; then done else notDone"></div>
         <ng-template #done>
-          <mat-icon class="action-btn" (click)="updateTodo($event)" [value]="todo">done_all</mat-icon>
+          <mat-icon class="action-btn" (click)="updateTodo($event)" [value]="todo">check_box</mat-icon>
         </ng-template>
         <ng-template #notDone>
-          <mat-icon class="action-btn" (click)="updateTodo($event)" [value]="todo">cached</mat-icon>
+          <mat-icon class="action-btn" (click)="updateTodo($event)" [value]="todo">check_box_outline_blank</mat-icon>
         </ng-template>
 
       </span>

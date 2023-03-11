@@ -31,3 +31,7 @@
   display: flex;
   flex-direction: row;
 }
+
+.stroke {
+  text-decoration: line-through
+}

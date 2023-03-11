@@ -3,7 +3,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ApiService } from '../../../services/api.service';
 import { Todo } from '../../todo/todo.component';
-import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-dialog',
@@ -12,23 +11,36 @@ import { Router } from "@angular/router";
 })
 export class DialogComponent implements OnInit {
   public form!: FormGroup;
+  isUpdate?: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogType,
     private formBuilder: FormBuilder,
     private api: ApiService,
-    private router: Router
   ) { }
 
   ngOnInit() {
-    if (this.data.type === "todo") {
+    if (this.data.type === 'update') {
+
+      this.isUpdate = true;
+
+      this.form = this.formBuilder.group({
+        title: [this.data.todo?.title, [Validators.nullValidator, Validators.required]],
+        isDone: [this.data.todo?.isDone, [Validators.nullValidator, Validators.required]],
+        description: [this.data.todo?.description, [Validators.nullValidator, Validators.required]],
+        createdAt: [this.data.todo?.createdAt, [Validators.nullValidator, Validators.required]]
+      });
+
+    } else {
+
       this.form = this.formBuilder.group({
         title: ["", [Validators.nullValidator, Validators.required]],
         isDone: ["", [Validators.nullValidator, Validators.required]],
         description: ["", [Validators.nullValidator, Validators.required]],
         createdAt: ["", [Validators.nullValidator, Validators.required]]
       });
+
     }
   }
 
@@ -42,7 +54,8 @@ export class DialogComponent implements OnInit {
   }
 
   action() {
-    if (this.form.valid && this.data.type === "todo") {
+
+    if (this.form.valid) {
 
       const toDoformData: Todo = {
         title: this.form.value.title,
@@ -52,15 +65,28 @@ export class DialogComponent implements OnInit {
         userId: localStorage.getItem('userId')!,
       }
 
-      this.api.createTodo(toDoformData).subscribe((res) => {
-        this.dialogRef.close(true);
-      });
+      switch (this.data.type) {
+        case "add":
+          this.api.createTodo(toDoformData).subscribe((res) => {
+            this.dialogRef.close(true);
+          });
+          break;
+        case "update":
+          const todo: Todo = this.data.todo!;
+          this.api.updateTodo(toDoformData, todo.id!).subscribe((res) => {
+            this.dialogRef.close(true);
+          });
+          break;
+        default:
+          break;
+      }
 
     }
-
   }
+
 }
 
 interface DialogType {
-  type: String
+  type: String,
+  todo?: Todo
 }

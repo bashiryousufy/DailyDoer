@@ -22,10 +22,9 @@ export class TodoComponent implements OnInit {
   }
 
   openAddTodoDialog(): void {
-
     //open todo dialog 
     const dialogRef = this.dialog.open(DialogComponent, {
-      data: { type: "todo" },
+      data: { type: "add" },
     })
       .afterClosed()
       .subscribe((shouldReload: boolean) => {
@@ -34,6 +33,18 @@ export class TodoComponent implements OnInit {
         if (shouldReload) this.getTodos();
       });
 
+  }
+
+  viewTodo(todo: Todo): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: { type: "update", todo: todo },
+    })
+      .afterClosed()
+      .subscribe((shouldReload: boolean) => {
+        dialogRef.unsubscribe();
+        //reload the page to get the latest todos 
+        if (shouldReload) this.getTodos();
+      });
   }
 
   getTodos(): void {
