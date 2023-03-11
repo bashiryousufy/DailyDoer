@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DialogComponent } from '../common/dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-todo',
@@ -10,11 +12,39 @@ import { NgxSpinnerService } from 'ngx-spinner';
 
 export class TodoComponent implements OnInit {
   public todos: Todo[] = [];
+  private todosTitles: String[] = [];
 
-  constructor(private api: ApiService, private spinner: NgxSpinnerService) { }
+
+  constructor(private api: ApiService, private spinner: NgxSpinnerService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getTodos();
+  }
+
+  openAddTodoDialog(): void {
+    //open todo dialog 
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: { type: "add" },
+    })
+      .afterClosed()
+      .subscribe((shouldReload: boolean) => {
+        dialogRef.unsubscribe();
+        //reload the page to get the latest todos 
+        if (shouldReload) this.getTodos();
+      });
+
+  }
+
+  viewTodo(todo: Todo): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: { type: "update", todo: todo },
+    })
+      .afterClosed()
+      .subscribe((shouldReload: boolean) => {
+        dialogRef.unsubscribe();
+        //reload the page to get the latest todos 
+        if (shouldReload) this.getTodos();
+      });
   }
 
   getTodos(): void {
@@ -24,6 +54,11 @@ export class TodoComponent implements OnInit {
     this.api.getTodos().subscribe((data: Todo[]) => {
       // sort the todo by not done on top
       this.todos = data.sort((a: any, b: any) => a.isDone - b.isDone);
+
+      //combine all the titles along with todo id 
+      this.todos.map((todo) => {
+        this.todosTitles.push(`${todo.id}_${todo.title}`);
+      });
 
       this.spinner.hide();
 
@@ -42,6 +77,8 @@ export class TodoComponent implements OnInit {
 
     this.api.updateTodo(todo, todo.id!).subscribe(res => {
       this.getTodos();
+
+
     });
 
   }
@@ -60,13 +97,52 @@ export class TodoComponent implements OnInit {
 
   }
 
+  translateTodo(event: any): void {
+
+    if (this.todos.length !== 0 && event.value !== 'None') {
+
+      const data = { data: this.todosTitles, target: event.value };
+
+      this.spinner.show();
+
+      this.api.translateTodo(data).subscribe(res => {
+
+        let translatedTodos: Todo[] = [];
+
+        for (const todo of this.todos) {
+
+          for (const resTodo of res.translatedTitle) {
+
+            //match the todoid 
+            if (todo.id === resTodo.split("_")[0]) {
+
+              translatedTodos.push(
+                { ...todo, title: resTodo.split("_")[1] }
+              );
+
+            }
+
+          }
+
+        }
+
+        this.todos = translatedTodos;
+
+        this.spinner.hide();
+
+      });
+
+    }
+
+  }
+
 }
 
 export interface Todo {
-  id?: String,
-  title: String,
-  description: String,
+  id?: string,
+  title: string,
+  description: string,
   isDone: boolean,
-  userId?: String,
-  createdAt: String,
+  userId?: string,
+  createdAt: string,
 }

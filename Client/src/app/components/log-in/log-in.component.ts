@@ -38,6 +38,7 @@ export class LogInComponent {
       this.api.login(this.loginForm.value).subscribe((res) => {
         localStorage.setItem("token", res.accessToken);
         localStorage.setItem("userId", res.userData.id);
+        localStorage.setItem("role", res.userData.role);
         this.router.navigate(["todos"]);
         this.spinner.hide();
       });

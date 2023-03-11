@@ -2,9 +2,10 @@ import express from 'express';
 const morgan = require('morgan');
 require('dotenv').config();
 const cors = require('cors');
-import Todo from './routes/v1/api/todo';
-import Auth from './routes/v1/api/auth';
-import Translate from './routes/v1/api/translate';
+import Todo from './routes/v1/api/todo.route';
+import Auth from './routes/v1/api/auth.route';
+import Translate from './routes/v1/api/translate.route';
+import Users from './routes/v1/api/users.route';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use('/api/v1/todo', Todo);
 app.use('/api/v1/auth', Auth);
 app.use('/api/v1/translate', Translate);
+app.use('/api/v1/users', Users);
 
 app.get('/', async (req, res) => {
 	res.send('Server running ');

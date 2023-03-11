@@ -1,16 +1,37 @@
 .todoList {
-    margin-top: 4rem;
-    padding: 2rem;
+  margin-top: 3rem;
+  padding: 2rem;
 }
 
 .action-container {
-    display: flex;
-    justify-content: space-between;
-    margin: auto;
-    padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  padding: 10px 0;
 }
 
 .action-btn {
-    width: 50px;
-    height: 50px;
+  width: 50px;
+  height: 50px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.addBtn {
+  height: 55px;
+  margin-right: 15px;
+}
+
+.translateBtnContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.stroke {
+  text-decoration: line-through
 }

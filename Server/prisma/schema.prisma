@@ -20,9 +20,22 @@ model User {
   updatedAt    DateTime       @updatedAt
   Todo         Todo[]
   RefreshToken RefreshToken[]
+  UsageHistory UsageHistory[]
 
   @@index([email])
   @@map(name: "users")
+}
+
+model UsageHistory {
+  id                String   @id @unique @default(uuid())
+  userId            String   @unique
+  translateBtnCount Int?
+  User              User     @relation(fields: [userId], references: [id])
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([userId])
+  @@map(name: "usageHistory")
 }
 
 model RefreshToken {
@@ -47,6 +60,7 @@ model Todo {
   createdAt   DateTime @db.Timestamp(3)
   updatedAt   DateTime @updatedAt
 
+  @@index([userId])
   @@map(name: "todos")
 }
 

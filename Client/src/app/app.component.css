@@ -1,10 +1,9 @@
-.nav-menu {
-    display: grid;
-    grid-auto-flow: column;
-    grid-column-gap: 10px;
-    margin-top: 10px;
+.title {
+  margin: 15px;
 }
 
-.title {
-    margin: 15px;
+.menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }

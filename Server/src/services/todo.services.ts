@@ -58,7 +58,7 @@ const update = async (todoId: string, userId: string, todo: Todo) => {
     try {
         const todos = await prisma.todo.updateMany({
             where: {
-                id: todo.id,
+                id: todoId,
                 userId: userId
             },
             data: todo

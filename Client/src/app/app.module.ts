@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserComponent } from './components/user/user.component';
 import { DialogComponent } from './components/common/dialog/dialog.component';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { SingleViewComponentComponent } from './components/common/single-view-component/single-view-component.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
     LogInComponent,
     RegisterComponent,
     UserComponent,
-    DialogComponent
+    DialogComponent,
+    SingleViewComponentComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
     BrowserAnimationsModule,
     AngularMaterialModule,
     FlexLayoutModule,
-    FormsModule, 
+    FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     NgxSpinnerModule

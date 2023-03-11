@@ -1,56 +1,42 @@
-<!-- <div class="todoList">
-    
-    <table mat-table [dataSource]="todos" >
+<div class="usersTable">
+  <table mat-table [dataSource]="users">
 
-        <!-- ID Column -->
-        <!-- <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef > ID </th>
-            <td mat-cell *matCellDef="let todo"> {{todo.id}} </td>
-        </ng-container> -->
-    
-        <!-- Title Column -->
-        <!-- <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef> Title </th>
-            <td mat-cell *matCellDef="let todo"> {{todo.title}} </td>
-        </ng-container> -->
-    
-        <!-- Description Column -->
-        <!-- <ng-container matColumnDef="description" >
-            <th mat-header-cell *matHeaderCellDef> Description </th>
-            <td mat-cell *matCellDef="let todo"> {{todo.description}} </td>
-        </ng-container> -->
-    
-        <!-- isDone Column -->
-        <!-- <ng-container matColumnDef="isDone" >
-            <th mat-header-cell *matHeaderCellDef > isDone </th>
-            <td mat-cell *matCellDef="let todo"> {{todo.isDone}} </td>
-        </ng-container> -->
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let user"> {{user.id}} </td>
+    </ng-container>
 
-        <!-- createdAt Column -->
-        <!-- <ng-container matColumnDef="createdAt" >
-            <th mat-header-cell *matHeaderCellDef > createdAt </th>
-            <td mat-cell *matCellDef="let todo"> {{todo.createdAt}} </td>
-        </ng-container> -->
-        
-        <!-- userId Column -->
-        <!-- <ng-container matColumnDef="userId" >
-            <th mat-header-cell *matHeaderCellDef > userId </th>
-            <td mat-cell *matCellDef="let todo"> {{todo.userId}} </td>
-        </ng-container> -->
-    
-        <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        
-    </table>
-    
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                    showFirstLastButtons
-                    aria-label="Select page of todos">
-    </mat-paginator>
+    Title Column
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+    </ng-container>
 
-    <button mat-fab class="fab-add" >
-        <mat-icon>add</mat-icon>
-    </button>
+    <!-- Description Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let user"> {{user.name}} </td>
+    </ng-container>
 
-</div> -->
+    <!-- isDone Column -->
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef> Role </th>
+      <td mat-cell *matCellDef="let user"> {{user.role}} </td>
+    </ng-container>
 
+    <!-- createdAt Column -->
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef> CreatedAt </th>
+      <td mat-cell *matCellDef="let user"> {{user.createdAt}} </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewUser(row)"></tr>
+
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of users">
+  </mat-paginator>
+</div>

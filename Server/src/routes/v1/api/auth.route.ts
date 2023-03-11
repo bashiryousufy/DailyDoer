@@ -1,4 +1,4 @@
-const express = require('express');
+import express from 'express';
 const app = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -19,7 +19,7 @@ import {
 } from '../../../services/users.services';
 
 
-app.post('/register', async (req: any, res: any, next: any) => {
+app.post('/register', async (req, res, next) => {
     try {
         const { email, password, name, role } = req.body;
 
@@ -54,7 +54,7 @@ app.post('/register', async (req: any, res: any, next: any) => {
 });
 
 
-app.post('/login', async (req: any, res: any, next: any) => {
+app.post('/login', async (req, res, next) => {
     try {
         const { email, password } = req.body;
 
@@ -88,7 +88,7 @@ app.post('/login', async (req: any, res: any, next: any) => {
 });
 
 
-app.post('/refreshToken', async (req: any, res: any, next: any) => {
+app.post('/refreshToken', async (req, res, next) => {
     try {
         const { refreshToken } = req.body;
         if (!refreshToken) {
@@ -125,7 +125,7 @@ app.post('/refreshToken', async (req: any, res: any, next: any) => {
     }
 });
 
-app.post('/revokeRefreshTokens', async (req: any, res: any, next: any) => {
+app.post('/revokeRefreshTokens', async (req, res, next) => {
     try {
         const { userId } = req.body;
         await revokeTokens(userId);

@@ -1,21 +1,24 @@
 <mat-toolbar color="primary" class="app-header">
 
-  <h1 class="title">DailyDoer</h1>
+  <span class="menu">
+    <h1 class="title">DailyDoer</h1>
+    <a mat-button routerLink="users" routerLinkActive="active" *ngIf="isAdmin">Users</a>
+    <a mat-button routerLink="todos" routerLinkActive="active">Todos</a>
+  </span>
 
-  <span class="nav-tool-items" *ngIf="!isLogged" class="btn">
+
+  <span *ngIf="!isLogged" class="btn">
     <a mat-button routerLink="login" routerLinkActive="active">Log in</a>
     <a mat-button mat-raised-button routerLink="register" routerLinkActive="active">Register</a>
   </span>
 
-  <span class="nav-tool-items" *ngIf="isLogged" class="nav-menu">
+  <span *ngIf="isLogged" class="nav-menu">
 
-    <a mat-raised-button (click)="openAddTodoDialog()">Add Todo</a>
-
-    <a mat-raised-button (click)="translateTodo()" color="warn">Translate</a>
-
-    <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>account_circle</mat-icon></button>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item disabled>Users</button>
+      <button mat-menu-item disabled>{{isAdmin ? 'admin' : 'user'}}</button>
       <button mat-menu-item (click)="logout()">Logout</button>
     </mat-menu>
 

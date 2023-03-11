@@ -1,14 +1,38 @@
 <div class="todoList">
 
-  <mat-list #todo>
+  <div class="row">
 
     <h1 matHeader>Todos</h1>
 
-    <mat-divider></mat-divider>
+    <div class="translateBtnContainer">
+      <button mat-raised-button color="accent" (click)="openAddTodoDialog()" class="addBtn">
+        <mat-icon fontIcon="add"></mat-icon> Add Todo
+      </button>
 
-    <mat-list-item *ngFor="let todo of todos">
+      <mat-form-field appearance="fill">
+        <mat-label>Select a language</mat-label>
+        <mat-select (selectionChange)="translateTodo($event)">
+          <mat-option value="None">None</mat-option>
+          <mat-option value="fa">Persian</mat-option>
+          <mat-option value="ru">Russian</mat-option>
+          <mat-option value="es">Spanish</mat-option>
+          <mat-option value="ar">Arabic</mat-option>
+          <mat-option value="zh">Chinese</mat-option>
+          <mat-option value="hi">Hindi</mat-option>
+          <mat-option value="fr">French</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-      <h3 matListItemTitle>{{todo.description}}</h3>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <mat-list #todo>
+
+    <mat-list-item *ngFor="let todo of todos" [class.stroke]="todo.isDone">
+
+      <h2 matListItemTitle (click)="viewTodo(todo)">{{todo.title}}</h2>
 
       <p matListItemLine>{{todo.createdAt}}</p>
 
@@ -17,10 +41,12 @@
         <mat-icon class="action-btn" (click)="deleteTodo($event)" [value]="todo.id">delete</mat-icon>
 
         <div *ngIf="todo.isDone; then done else notDone"></div>
-        <ng-template #done><mat-icon class="action-btn" (click)="updateTodo($event)"
-            [value]="todo">done_all</mat-icon></ng-template>
-        <ng-template #notDone><mat-icon class="action-btn" (click)="updateTodo($event)"
-            [value]="todo">cached</mat-icon></ng-template>
+        <ng-template #done>
+          <mat-icon class="action-btn" (click)="updateTodo($event)" [value]="todo">check_box</mat-icon>
+        </ng-template>
+        <ng-template #notDone>
+          <mat-icon class="action-btn" (click)="updateTodo($event)" [value]="todo">check_box_outline_blank</mat-icon>
+        </ng-template>
 
       </span>
 

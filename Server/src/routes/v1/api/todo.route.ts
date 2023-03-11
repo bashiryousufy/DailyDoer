@@ -16,6 +16,7 @@ app.get('/', isAuthenticated, async (req, res) => {
 app.get('/:id', isAuthenticated, async (req, res) => {
 
     const userId: string = res.locals.userId;
+
     const { id } = req.params;
 
     const data = await Todo.getById(id, userId);
@@ -44,6 +45,7 @@ app.post('/', isAuthenticated, async (req, res) => {
 app.put('/:id', isAuthenticated, async (req, res) => {
 
     const { id } = req.params;
+
     const userId: string = res.locals.userId;
 
     const body = req.body;
