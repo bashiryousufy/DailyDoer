@@ -27,8 +27,14 @@ function findUserById(id: string) {
   });
 }
 
+function getAllUsers() {
+  return prisma.user.findMany();
+}
+
+
 export {
   findUserByEmail,
   findUserById,
-  createUserByEmailAndPassword
+  createUserByEmailAndPassword,
+  getAllUsers
 };

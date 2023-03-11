@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ApiService } from '../../../services/api.service';
 import { Todo } from '../../todo/todo.component';
+import { User } from '../../user/user.component';
 
 @Component({
   selector: 'app-dialog',
@@ -86,7 +87,8 @@ export class DialogComponent implements OnInit {
 
 }
 
-interface DialogType {
+export interface DialogType {
   type: String,
-  todo?: Todo
+  todo?: Todo,
+  user?: User
 }

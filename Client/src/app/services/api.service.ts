@@ -65,4 +65,18 @@ export class ApiService {
       });
   }
 
+  getUsers(): Observable<any> {
+    return this.http
+      .get<any>(`${this.baseUrl}/users`, {
+        headers: this.getToken(),
+      });
+  }
+
+  getUserUsage(userId: string | undefined): Observable<any> {
+    return this.http
+      .get<any>(`${this.baseUrl}/users/${userId}/history`, {
+        headers: this.getToken(),
+      });
+  }
+
 }

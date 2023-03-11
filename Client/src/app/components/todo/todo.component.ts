@@ -139,10 +139,10 @@ export class TodoComponent implements OnInit {
 }
 
 export interface Todo {
-  id?: String,
-  title: String,
-  description: String,
+  id?: string,
+  title: string,
+  description: string,
   isDone: boolean,
-  userId?: String,
-  createdAt: String,
+  userId?: string,
+  createdAt: string,
 }

@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
+import { findUserById } from '../services/users.services';
 import { parseJwt } from '../utils/jwt';
 
-function isAuthenticated(req: any, res: any, next: any) {
+async function isAuthenticated(req: any, res: any, next: any) {
 
   const { authorization } = req.headers;
 
@@ -16,6 +17,15 @@ function isAuthenticated(req: any, res: any, next: any) {
     const parsedToken = parseJwt(token);
 
     res.locals.userId = parsedToken.userId;
+
+    //check if admin 
+    if (req.route.path === '/api/v1/users') {
+
+      const isAdmin = await findUserById(res.locals.userId);
+
+      if (isAdmin!.role !== 'admin') res.status(401).send("Unauthorized");
+
+    }
 
     const payload = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
 
