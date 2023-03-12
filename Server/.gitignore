@@ -1,3 +1,5 @@
 .env
 node_modules
 src/config/*.json
+dist
+app.yaml

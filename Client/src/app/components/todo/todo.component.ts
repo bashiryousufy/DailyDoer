@@ -4,6 +4,15 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogComponent } from '../common/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
+export interface Todo {
+  id?: string,
+  title: string,
+  description: string,
+  isDone: boolean,
+  userId?: string,
+  createdAt: string,
+}
+
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
@@ -12,10 +21,10 @@ import { MatDialog } from '@angular/material/dialog';
 
 export class TodoComponent implements OnInit {
   public todos: Todo[] = [];
-  private todosTitles: String[] = [];
+  public todosTitles: String[] = [];
 
 
-  constructor(private api: ApiService, private spinner: NgxSpinnerService, public dialog: MatDialog) { }
+  constructor(private api: ApiService, public spinner: NgxSpinnerService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getTodos();
@@ -138,11 +147,4 @@ export class TodoComponent implements OnInit {
 
 }
 
-export interface Todo {
-  id?: string,
-  title: string,
-  description: string,
-  isDone: boolean,
-  userId?: string,
-  createdAt: string,
-}
+
