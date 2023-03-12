@@ -62,23 +62,23 @@ app.post('/login', async (req, res, next) => {
             res.status(400).send('You must provide an email and a password.');
         }
 
-        const existingUser: any = await findUserByEmail(email);
+        const existingUser = await findUserByEmail(email);
 
         if (!existingUser) {
             res.status(403).send('Invalid login credentials.');
         }
 
-        const validPassword = await bcrypt.compare(password, existingUser.password);
+        const validPassword = await bcrypt.compare(password, existingUser?.password);
         if (!validPassword) {
             res.status(403).send('Invalid login credentials.');
         }
 
         const jti = uuidv4();
         const { accessToken, refreshToken } = generateTokens(existingUser, jti);
-        await addRefreshTokenToWhitelist({ jti, refreshToken, userId: existingUser.id });
+        await addRefreshTokenToWhitelist({ jti, refreshToken, userId: existingUser?.id });
 
         res.json({
-            userData: existingUser,
+            userData: { role: existingUser?.role, userId: existingUser?.id },
             accessToken,
             refreshToken
         });

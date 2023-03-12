@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "nodemon src/server.ts",
     "start": "node ./dist/server.js",
-    "build": "tsc"
+    "build": "tsc",
+    "gcp-build": "tsc -p ."
   },
   "author": "",
   "license": "ISC",
