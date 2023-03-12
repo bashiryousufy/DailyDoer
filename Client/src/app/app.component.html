@@ -3,7 +3,7 @@
   <span class="menu">
     <h1 class="title">DailyDoer</h1>
     <a mat-button routerLink="users" routerLinkActive="active" *ngIf="isAdmin">Users</a>
-    <a mat-button routerLink="todos" routerLinkActive="active">Todos</a>
+    <a mat-button routerLink="todos" routerLinkActive="active" *ngIf="isLogged">Todos</a>
   </span>
 
 
