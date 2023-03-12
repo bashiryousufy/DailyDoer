@@ -97,6 +97,17 @@ env_variables:
 
 ```
 
+here is the package.json scripts
+
+```json
+ "scripts": {
+    "dev": "nodemon src/server.ts",
+    "start": "node ./dist/server.js",
+    "build": "tsc",
+    "gcp-build": "tsc -p ."
+  },
+```
+
 3. Replace the environment variable values with your server application's environment variable values.
 4. Deploy your server application to Google Cloud App Engine by running the following command:
 
