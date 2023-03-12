@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "14.x.x"
+  },
   "scripts": {
     "dev": "nodemon src/server.ts",
     "start": "node ./dist/server.js",
